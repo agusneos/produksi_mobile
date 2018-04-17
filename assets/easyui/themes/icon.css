@@ -94,7 +94,6 @@
 .icon-large-chart{
 	background:url('icons/large_chart.png') no-repeat center center;
 }
-
 /*Self Add Custom*/
 
 .icon-home{
@@ -216,4 +215,7 @@
 }
 .icon-application_double{
 	background:url('icons/custom/application_double.png') no-repeat center center;
+}
+.icon-qrcode{
+	background:url('icons/custom/qrcode.png') no-repeat center center;
 }

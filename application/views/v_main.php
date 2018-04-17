@@ -34,8 +34,7 @@
             curr_hour   = checkTime(curr_hour);
             curr_min    = checkTime(curr_min);
             curr_sec    = checkTime(curr_sec);
-            $('#clock-in').linkbutton({text:thisDay + ', ' + day + ' ' + months[month] + ' ' + year + ' - ' + curr_hour+":"+curr_min+":"+curr_sec});
-            $('#clock-out').linkbutton({text:thisDay + ', ' + day + ' ' + months[month] + ' ' + year + ' - ' + curr_hour+":"+curr_min+":"+curr_sec});
+            $('#clock').linkbutton({text:thisDay + ', ' + day + ' ' + months[month] + ' ' + year + ' - ' + curr_hour+":"+curr_min+":"+curr_sec});
             }
         function checkTime(i) {
             if (i<10) {
@@ -96,9 +95,7 @@
             <div class="m-toolbar">
                 <div class="m-title">Main Menu</div>
                 <div class="m-left">
-                    <a href="javascript:void(0)" class="easyui-menubutton" data-options="iconCls:'icon-user',plain:true,hasDownArrow:false,menu:'#mm',menuAlign:'right'">
-                        <?php echo $this->session->userdata('name');?>
-                    </a>
+                    <a href="<?php echo site_url('main/logout'); ?>" class="easyui-linkbutton" data-options="iconCls:'icon-logout'" style="width:70px">Logout</a>
                 </div>
             </div>
         </header>
@@ -106,58 +103,66 @@
             <div href="<?php echo site_url('main/logout'); ?>" data-options="iconCls:'icon-logout'">Logout</div>
         </div>
         
-        <div class="easyui-tabs" data-options="tabHeight:60,fit:true,tabPosition:'bottom',border:false,pill:true,narrow:true,justified:true">
+        <div id="tt-main" class="easyui-tabs" data-options="tabHeight:60,fit:true,tabPosition:'bottom',border:false,pill:true,narrow:true,justified:true">
             <div style="padding:10px">
                 <div class="panel-header tt-inner">
-                    <img src='<?=base_url('assets/easyui/themes/icons/large_picture.png')?>'/><br>SCAN IN
+                    <img src='<?=base_url('assets/easyui/themes/icons/custom/qrcode.png')?>'/><br>SCAN
                 </div>
-                    <h1 align="center"><a href="javascript:void(0)" class="easyui-linkbutton" id="clock-in" data-options="plain:true,iconCls:'icon-time'"></a></h1>
-                    <h1 align="center">PROSES IN <?php echo strtoupper($this->session->userdata('proc'));?></h1>  
+                <h3 align="center"><?php echo strtoupper($this->session->userdata('name'));?></h3>
+                <h2 align="center">INPUT PROSES <?php echo strtoupper($this->session->userdata('proc'));?></h2>  
 
-                    <form id="form-scan-in" method="post" novalidate onsubmit="return false">
-                        <div style="font-size:20px;margin-bottom:20px">
-                            <input id="lineIdIn" name="lineIdIn" class="easyui-numberbox" label="LINE" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="1">
-                        </div>
-                        <div style="font-size:20px;margin-bottom:20px">
-                            <input id="machIdIn" name="machIdIn" class="easyui-numberbox" label="MESIN" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="2">
-                        </div>
-                        <div style="font-size:20px;margin-bottom:20px">
-                            <input id="scanIdIn" name="scanIdIn" class="easyui-numberbox" label="KARTU" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="3">
-                        </div>                         
-                    </form>
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="buttonResetIn();">RESET</a>
-
-                
+                <form id="form-scan" method="post" novalidate onsubmit="return false">
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="lineId" name="lineId" class="easyui-numberbox" required="true" label="LINE" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="1">
+                    </div>
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="machId" name="machId" class="easyui-numberbox" required="true" label="MESIN" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="2">
+                    </div>
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="scanId" name="scanId" class="easyui-numberbox" required="true" label="KARTU" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="3">
+                    </div>                         
+                </form>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="buttonReset();">RESET</a>
             </div>
-            <div style="padding:10px">
+            <div style="padding:10px;background-color:#66ff99">
                 <div class="panel-header tt-inner">
-                    <img src='<?=base_url('assets/easyui/themes/icons/large_picture.png')?>'/><br>SCAN OUT
+                    <img src='<?=base_url('assets/easyui/themes/icons/large_smartart.png')?>'/><br>UPDATE
                 </div>
-                    <h1 align="center"><a href="javascript:void(0)" class="easyui-linkbutton" id="clock-out" data-options="plain:true,iconCls:'icon-time'"></a></h1>
-                    <h1 align="center">PROSES OUT <?php echo strtoupper($this->session->userdata('proc'));?></h1>  
+                <h3 align="center"><?php echo strtoupper($this->session->userdata('name'));?></h3>
+                <h2 align="center">UPDATE PROSES <?php echo strtoupper($this->session->userdata('proc'));?></h2>  
 
-                    <form id="form-scan-out" method="post" novalidate onsubmit="return false">
-                        <div style="font-size:20px;margin-bottom:20px">
-                            <input id="lineIdOut" name="lineIdOut" class="easyui-numberbox" label="LINE" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="1">
-                        </div>
-                        <div style="font-size:20px;margin-bottom:20px">
-                            <input id="machIdOut" name="machIdOut" class="easyui-numberbox" label="MESIN" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="2">
-                        </div>
-                        <div style="font-size:20px;margin-bottom:20px">
-                            <input id="scanIdOut" name="scanIdOut" class="easyui-numberbox" label="KARTU" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="3">
-                        </div>                         
-                    </form>
-                    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="buttonResetOut();">RESET</a>
-
-                
+                <form id="form-update" method="post" novalidate onsubmit="return false">
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="upScanId" name="upScanId" class="easyui-numberbox" required="true" label="KARTU" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="4">
+                    </div>
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="idPros" name="idPros" class="easyui-numberbox" label="Proc. Id" labelPosition="left" data-options="min:0,precision:0" style="width:80%;height:40px;padding:12px" readonly>
+                    </div>
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="currentKg" name="currentKg" class="easyui-numberbox" label="Before" labelPosition="left" data-options="min:0,precision:2" style="width:80%;height:40px;padding:12px" readonly><a> Kg</a>
+                    </div>
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="grPcs" name="grPcs" class="easyui-numberbox" label="Gr/Pcs" labelPosition="left" data-options="min:0,precision:2" style="width:80%;height:40px;padding:12px" readonly><a> Gr</a>
+                    </div>
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="afterKg" name="afterKg" class="easyui-numberbox" required="true" label="After" labelPosition="left" data-options="min:0,precision:2" style="width:80%;height:40px;padding:12px" tabindex="5"><a> Kg</a>
+                    </div>
+                </form>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="updateButtonReset();">RESET</a>
             </div>
-            <div style="padding:10px">
+            <div style="padding:10px;background-color:#ff6666">
                 <div class="panel-header tt-inner">
-                    <img src='<?=base_url('assets/easyui/themes/icons/large_picture.png')?>'/><br>UPDATE
+                    <img src='<?=base_url('assets/easyui/themes/icons/custom/problem-icon.png')?>'/><br>KBM
                 </div>
-                <p>In computing, an image scanner—often abbreviated to just scanner—is a device that optically scans images, printed text, handwriting, or an object, and converts it to a digital image.</p>
+                <h3 align="center"><?php echo strtoupper($this->session->userdata('name'));?></h3>
+                <h2 align="center">KBM PROSES <?php echo strtoupper($this->session->userdata('proc'));?></h2>
+                <form id="form-update" method="post" novalidate onsubmit="return false">
+                    <div style="font-size:20px;margin-bottom:20px">
+                        <input id="kbmScanId" name="kbmScanId" class="easyui-numberbox" required="true" label="KARTU" labelPosition="left" style="width:80%;height:40px;padding:12px" tabindex="4">
+                    </div>
+                </form>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" onclick="kbmButtonReset();">RESET</a>
             </div>
-            
         </div>
         <style scoped>
             .tt-inner{
@@ -175,186 +180,197 @@
     <div id="p2" class="easyui-navpanel" ></div>
 
 <script type="text/javascript">
-    $('#dl').datalist({
-        onClickRow      : function(index,row){
-            $('#p2').navpanel({
-                href:row.uri
-            });
-        },
-        textFormatter: function(value){
-            return '<a href=\'javascript:void(0)\'  onclick=\'$.mobile.go("#p2")\' class=\'datalist-link\'>' + value + '</a>';
-        },
-        url     : '<?php echo site_url('menu/index'); ?>',
-        method  : 'get',
-        fit     : true,
-        lines   : true,
-        border  : false
-    });
     $(function(){    
-        $('#scanIdIn').textbox('disable');
-        $('#scanIdOut').textbox('disable');
-        $('#scanIdIn').textbox('setValue', '');
-        $('#scanIdOut').textbox('setValue', '');
-        $('#lineIdIn').next().find('input').focus();
-        $('#lineIdOut').next().find('input').focus();
-     /*   $('#shifId').textbox('textbox').keypress(function(e){
-            if (e.keyCode == 13){
-                $('#lineId').next().find('input').focus();
+        $('#tt-main').tabs({
+            border:false,
+            onSelect:function(title,index){
+                if(index==0){
+                    buttonReset();
+                }
+                else if(index==1){
+                    updateButtonReset();
+                }
+                else if(index==2){
+                    $('#kbmScanId').next().find('input').focus();
+                    $('#kbmScanId').textbox('setValue', '');
+                }
             }
         });
-        */
-        $('#lineIdIn').textbox('textbox').keypress(function(e){
+        ///scan
+        $('#scanId').textbox('disable');
+        $('#scanId').textbox('setValue', '');
+        $('#lineId').next().find('input').focus();
+        $('#lineId').textbox('textbox').keypress(function(e){
             if (e.keyCode == 13){
-                $('#machIdIn').next().find('input').focus();
+                $('#machId').next().find('input').focus();
             }
         });
-        $('#lineIdOut').textbox('textbox').keypress(function(e){
+        $('#machId').textbox('textbox').keypress(function(e){
             if (e.keyCode == 13){
-                $('#machIdOut').next().find('input').focus();
-            }
-        });
-        $('#machIdIn').textbox('textbox').keypress(function(e){
-            if (e.keyCode == 13){
-                var namaProsesIn  = '<?php echo strtoupper($this->session->userdata('proc'));?>';
-                var liidIn        = $('#lineIdIn').textbox('getValue');
-                var mcidIn        = $('#machIdIn').textbox('getValue');
-                $.post('<?php echo site_url('scan/machCheck'); ?>',{liid:liidIn,mcid:mcidIn},function(result){
+                var namaProses  = '<?php echo strtoupper($this->session->userdata('proc'));?>';
+                var liid        = $('#lineId').textbox('getValue');
+                var mcid        = $('#machId').textbox('getValue');
+                $.post('<?php echo site_url('scan/machCheck'); ?>',{liid:liid,mcid:mcid},function(result){
                     if (result.success){
-                        $('#scanIdIn').textbox('enable');
-                        $('#scanIdIn').next().find('input').focus();
-                        $('#lineIdIn').textbox('disable');
-                        $('#machIdIn').textbox('disable');
-                         mesinIn = result.machineId;
+                        $('#scanId').textbox('enable');
+                        $('#scanId').next().find('input').focus();
+                        $('#lineId').textbox('disable');
+                        $('#machId').textbox('disable');
+                         mesin = result.machineId;
                     }
                     else{
-                        var win = $.messager.alert('Error','Gagal !'+('<br/>')+namaProsesIn+('<br/>')+'Line : '+liidIn+('<br/>')+'Mesin : '+mcidIn+('<br/>')+'Tidak Ada !','error', function(){
-                            $('#scanIdIn').textbox('disable');
-                            $('#scanIdIn').textbox('setValue', '');
-                            $('#lineIdIn').textbox('setValue', '');
-                            $('#machIdIn').textbox('setValue', '');
-                            $('#lineIdIn').next().find('input').focus();
+                        var win = $.messager.alert('Error','Gagal !'+('<br/>')+namaProses+('<br/>')+'Line : '+liid+('<br/>')+'Mesin : '+mcid+('<br/>')+'Tidak Ada !','error', function(){
+                            $('#scanId').textbox('disable');
+                            $('#scanId').textbox('setValue', '');
+                            $('#lineId').textbox('setValue', '');
+                            $('#machId').textbox('setValue', '');
+                            $('#lineId').next().find('input').focus();
                         });
                         win.window('window').addClass('bg-error');
                     }
                 },'json');
             }
         });
-        $('#machIdOut').textbox('textbox').keypress(function(e){
+        $('#scanId').textbox('textbox').keypress(function(e){
             if (e.keyCode == 13){
-                var namaProsesOut  = '<?php echo strtoupper($this->session->userdata('proc'));?>';
-                var liidOut        = $('#lineIdOut').textbox('getValue');
-                var mcidOut        = $('#machIdOut').textbox('getValue');
-                $.post('<?php echo site_url('scan/machCheck'); ?>',{liid:liidOut,mcid:mcidOut},function(result){
+                var scid = $('#scanId').textbox('getValue');
+                if(scid!=''){
+                    $.post('<?php echo site_url('scan/create'); ?>',{scid:scid,mcid:mesin},function(result){
+                        if (result.success){
+                            if (result.warning){
+                                 var warn = $.messager.alert('Informasi',result.info,'warning', function(){
+                                    $('#scanId').next().find('input').focus();
+                                    $.messager.show({
+                                        title   : 'Info',
+                                        msg     : '<div class="messager-icon messager-info"></div><div>Data Berhasil Diinput</div>'
+                                    });
+                                });
+                                warn.window('window').addClass('bg-warning');
+                            }
+                            else{
+                                $.messager.show({
+                                    title   : 'Info',
+                                    msg     : '<div class="messager-icon messager-info"></div><div>Data Berhasil Diinput</div>'
+                                });
+                            }                                    
+                        }
+                        else{
+                            var win = $.messager.alert('Error','Gagal !'+('<br/>')+result.error,'error', function(){
+                                $('#scanId').next().find('input').focus();
+                            });
+                            win.window('window').addClass('bg-error');
+                        }
+                        $('#scanId').textbox('setValue', '');
+                    },'json');
+                }
+            }
+        });
+        /// update
+        $('#upScanId').textbox('textbox').keypress(function(e){
+            if (e.keyCode == 13){
+                var upScanId        = $('#upScanId').textbox('getValue');
+                $.post('<?php echo site_url('scan/cardCheck'); ?>',{upScanId:upScanId},function(result){
                     if (result.success){
-                        $('#scanIdOut').textbox('enable');
-                        $('#scanIdOut').next().find('input').focus();
-                        $('#lineIdOut').textbox('disable');
-                        $('#machIdOut').textbox('disable');
-                         mesinOut = result.machineId;
+                        $('#afterKg').textbox('enable');
+                        $('#afterKg').next().find('input').focus();
+                        $('#currentKg').textbox('setValue', result.current);
+                        $('#grPcs').textbox('setValue', result.grpcs);
+                        $('#idPros').textbox('setValue', result.prosid);
+                        $('#upScanId').textbox('disable');
                     }
                     else{
-                        var win = $.messager.alert('Error','Gagal !'+('<br/>')+namaProsesOut+('<br/>')+'Line : '+liidOut+('<br/>')+'Mesin : '+mcidOut+('<br/>')+'Tidak Ada !','error', function(){
-                            $('#scanIdOut').textbox('disable');
-                            $('#scanIdOut').textbox('setValue', '');
-                            $('#lineIdOut').textbox('setValue', '');
-                            $('#machIdOut').textbox('setValue', '');
-                            $('#lineIdOut').next().find('input').focus();
+                        //var win = $.messager.alert('Error','Gagal !'+('<br/>')+'Data Tidak Ditemukan'+('<br/>'),'error', function(){
+                        var win = $.messager.alert('Error','Gagal !'+('<br/>')+result.error,'error', function(){
+                            updateButtonReset();
                         });
                         win.window('window').addClass('bg-error');
                     }
                 },'json');
             }
         });
-        $('#scanIdIn').textbox('textbox').keypress(function(e){
+        $('#afterKg').textbox('textbox').keypress(function(e){
             if (e.keyCode == 13){
-                //alert('horay');
-                
-                var scidIn = $('#scanIdIn').textbox('getValue');
-                //var shid = $('#shifId').textbox('getValue');
-                $.post('<?php echo site_url('scan/create_in'); ?>',{scid:scidIn,mcid:mesinIn},function(result){
-                    if (result.success){
-                        if (result.warning){
-                             var warnIn = $.messager.alert('Informasi',result.info,'warning', function(){
-                                $('#scanIdIn').next().find('input').focus();
-                                $.messager.show({
-                                    title   : 'Info',
-                                    msg     : '<div class="messager-icon messager-info"></div><div>Data In Berhasil Diinput</div>'
-                                });
-                            });
-                            warnIn.window('window').addClass('bg-warning');
-                        }
-                        else{
+                var idPros  = $('#idPros').textbox('getValue');
+                var grPcs   = $('#grPcs').textbox('getValue');
+                var afterKg = $('#afterKg').textbox('getValue');
+                if(afterKg!=''){
+                    $.post('<?php echo site_url('scan/update'); ?>',{idPros:idPros,grPcs:grPcs,afterKg:afterKg},function(result){
+                        if (result.success){
                             $.messager.show({
                                 title   : 'Info',
-                                msg     : '<div class="messager-icon messager-info"></div><div>Data In Berhasil Diinput</div>'
+                                msg     : '<div class="messager-icon messager-info"></div><div>Data Berhasil Diubah</div>'
                             });
-                        }                                    
-                    }
-                    else{
-                        var winIn = $.messager.alert('Error','Gagal !'+('<br/>')+result.error,'error', function(){
-                            $('#scanIdIn').next().find('input').focus();
-                        });
-                        winIn.window('window').addClass('bg-error');
-                    }
-                    $('#scanIdIn').textbox('setValue', '');
-                },'json');
+                            updateButtonReset();
+                        }
+                        else{
+                            var win = $.messager.alert('Error','Gagal !'+('<br/>')+result.error,'error', function(){
+                                $('#scanId').next().find('input').focus();
+                            });
+                            win.window('window').addClass('bg-error');
+                        }
+                   /*     $('#scanId').textbox('setValue', '');
+                        $('#afterKg').textbox('setValue', '');
+                        $('#currentKg').textbox('setValue', '');
+                        $('#grPcs').textbox('setValue', '');
+                        $('#idPros').textbox('setValue', '');
+                        $('#afterKg').textbox('disable');
+                        $('#upScanId').textbox('enable');
+                        $('#scanId').next().find('input').focus(); */
+                    },'json');
+                }
             }
         });
-        $('#scanIdOut').textbox('textbox').keypress(function(e){
+        
+        //kbm
+        $('#kbmScanId').textbox('textbox').keypress(function(e){
             if (e.keyCode == 13){
-                //alert('horay');
-                
-                var scidOut = $('#scanIdOut').textbox('getValue');
-                //var shid = $('#shifId').textbox('getValue');
-                $.post('<?php echo site_url('scan/create_out'); ?>',{scid:scidOut,mcid:mesinOut},function(result){
-                    if (result.success){
-                        if (result.warning){
-                             var warnOut = $.messager.alert('Informasi',result.info,'warning', function(){
-                                $('#scanIdOut').next().find('input').focus();
-                                $.messager.show({
-                                    title   : 'Info',
-                                    msg     : '<div class="messager-icon messager-info"></div><div>Data Out Berhasil Diinput</div>'
-                                });
-                            });
-                            warnOut.window('window').addClass('bg-warning');
-                        }
-                        else{
+               var kbmScanId        = $('#kbmScanId').textbox('getValue');
+               if(kbmScanId!=''){
+                    $.post('<?php echo site_url('scan/kbm'); ?>',{kbmScanId:kbmScanId},function(result){
+                        if (result.success){
                             $.messager.show({
                                 title   : 'Info',
-                                msg     : '<div class="messager-icon messager-info"></div><div>Data Out Berhasil Diinput</div>'
+                                msg     : '<div class="messager-icon messager-info"></div><div>Data Berhasil Diubah</div>'
                             });
-                        }                                    
-                    }
-                    else{
-                        var winOut = $.messager.alert('Error','Gagal !'+('<br/>')+result.error,'error', function(){
-                            $('#scanIdOut').next().find('input').focus();
-                        });
-                        winOut.window('window').addClass('bg-error');
-                    }
-                    $('#scanIdOut').textbox('setValue', '');
-                },'json');
+                            $('#kbmScanId').next().find('input').focus();
+                            $('#kbmScanId').textbox('setValue', '');
+                        }
+                        else{
+                            var win = $.messager.alert('Error','Gagal !'+('<br/>')+result.error,'error', function(){
+                                $('#kbmScanId').next().find('input').focus();
+                                $('#kbmScanId').textbox('setValue', '');
+                            });
+                            win.window('window').addClass('bg-error');
+                        }
+                    },'json');
+                }
             }
         });
     });
     
-    function buttonResetIn(){
-        $('#lineIdIn').textbox('enable');
-        $('#lineIdIn').textbox('setValue', '');
-        $('#lineIdIn').next().find('input').focus();
-        $('#machIdIn').textbox('enable');
-        $('#machIdIn').textbox('setValue', '');
-        $('#scanIdIn').textbox('disable');
-        $('#scanIdIn').textbox('setValue', '');
-    }
-    function buttonResetOut(){
-        $('#lineIdOut').textbox('enable');
-        $('#lineIdOut').textbox('setValue', '');
-        $('#lineIdOut').next().find('input').focus();
-        $('#machIdOut').textbox('enable');
-        $('#machIdOut').textbox('setValue', '');
-        $('#scanIdOut').textbox('disable');
-        $('#scanIdOut').textbox('setValue', '');
-    }
+    function buttonReset(){
+        $('#lineId').textbox('enable');
+        $('#lineId').textbox('setValue', '');
+        $('#lineId').next().find('input').focus();
+        $('#machId').textbox('enable');
+        $('#machId').textbox('setValue', '');
+        $('#scanId').textbox('disable');
+        $('#scanId').textbox('setValue', '');
+    };
+    function updateButtonReset(){
+        $('#upScanId').textbox('enable');
+        $('#upScanId').textbox('setValue', '');
+        $('#upScanId').next().find('input').focus();
+        $('#idPros').textbox('setValue', '');
+        $('#currentKg').textbox('setValue', '');
+        $('#grPcs').textbox('setValue', '');
+        $('#afterKg').textbox('setValue', '');
+        $('#afterKg').textbox('disable');
+    };
+    function kbmButtonReset(){
+        $('#kbmScanId').next().find('input').focus();
+        $('#kbmScanId').textbox('setValue', '');
+    };
 </script>
 </body>
 </html>

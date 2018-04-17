@@ -18,12 +18,12 @@
     <div class="easyui-navpanel">
         <header>
             <div class="m-toolbar">
-                <span class="m-title">Login to System</span>
+                <span class="m-title">Login to System Produksi</span>
             </div>
         </header>
         
         <div style="margin:20px auto;width:100px;height:100px;border-radius:100px;overflow:hidden">
-            <img src="<?=base_url('assets/easyui/themes/icons/maxi_login.png')?>" style="margin:0;width:100%;height:100%;">
+            <img src="<?=base_url('assets/easyui/themes/icons/custom/maxi_login.png')?>" style="margin:0;width:100%;height:100%;">
         </div>
         
         <div style="padding:0 20px">

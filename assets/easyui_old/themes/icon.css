@@ -95,19 +95,16 @@
 	background:url('icons/large_chart.png') no-repeat center center;
 }
 
-
-
-
-/*Self Add*/
+/*Self Add Custom*/
 
 .icon-home{
-	background:url('icons/home.png') no-repeat center center;
+	background:url('icons/custom/house.png') no-repeat center center;
 }
 .icon-logout{
-	background:url('icons/logout.png') no-repeat center center;
+	background:url('icons/custom/door_out.png') no-repeat center center;
 }
 .icon-chart{
-	background:url('icons/chart.png') no-repeat center center;
+	background:url('icons/custom/chart_curve.png') no-repeat center center;
 }
 .icon-transaksi{
 	background:url('icons/transaksi.png') no-repeat center center;
@@ -211,6 +208,12 @@
 .icon-hammer_plus{
 	background:url('icons/hammer_plus.png') no-repeat center center;
 }
-.icon-maxi_login{
-	background:url('icons/maxi_login.png') no-repeat center center;
+.icon-inquiry{
+	background:url('icons/custom/chart_bar.png') no-repeat center center;
+}
+.icon-search-2{
+	background:url('icons/search-2.png') no-repeat center center;
+}
+.icon-application_double{
+	background:url('icons/custom/application_double.png') no-repeat center center;
 }

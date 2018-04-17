@@ -2,8 +2,8 @@
 Ver 1.0
 2014-11-24
 
-Use jQuery EasyUI Ver. 1.5.1
-    * datagrid-filter (ada modif di operation penambahan (is))     -> http://www.jeasyui.com/easyui/datagrid-filter.js
+Use jQuery EasyUI Ver. 1.5.4.x
+    * datagrid-filter (ada modif di operation penambahan (is))  (LINE 407)   -> http://www.jeasyui.com/easyui/datagrid-filter.js
     * datagrid-scrollview   -> http://www.jeasyui.com/easyui/datagrid-scrollview.js
     * jquery.edatagrid      -> http://www.jeasyui.com/easyui/jquery.edatagrid.js
 Use PHPExcel			Ver. 1.8.0, 2014-03-02
@@ -12,6 +12,7 @@ Use WebcamJS 		Ver. 1.0
 Use FPDF 				Ver. 1.8.1
 Use QRCode 			Ver. 0.99
 Use Codeigniter 		Ver. 2.2.6 end
+change sess_cookie_name in config
 Folder System is safe for update
 =============================================================
 // char $POST yang di convert otomatis menjadi underscore

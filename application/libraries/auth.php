@@ -41,7 +41,7 @@ class Auth{
     }
     
     function init($ip, $id){
-        $this->CI->db->select('m_computer_process_cat, m_process_cat_id, m_process_cat_name');
+        $this->CI->db->select('m_computer_process_cat, m_process_cat_id, m_process_cat_name, m_process_cat_table');
         $this->CI->db->from('m_computer');
         $this->CI->db->join('m_process_cat', 'm_computer_process_cat=m_process_cat_id', 'left');
         $this->CI->db->where('m_computer_ip',$ip);
@@ -63,6 +63,7 @@ class Auth{
                 $session_data = array(
                     'procid'    => $userdata1->m_process_cat_id,
                     'proc'      => $userdata1->m_process_cat_name,
+                    'proc_tbl'  => $userdata1->m_process_cat_table,
                     'nik'       => $userdata2->m_operator_nik,
                     'name'      => $userdata2->m_operator_name,
                     'auth'      => $userdata2->m_operator_auth

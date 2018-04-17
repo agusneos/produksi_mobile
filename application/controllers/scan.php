@@ -12,59 +12,23 @@ class Scan extends CI_Controller {
         $this->load->view('v_scan'); 
     }
     
-    function create_in()
-    {        
+    function create() {        
         if(!isset($_POST))	
             show_404();
         
-        $id     = addslashes($_POST['scid']);
-        //$shid   = addslashes($_POST['shid']);
-        $mcid   = addslashes($_POST['mcid']);
-        $procid = $this->session->userdata('procid');
-        $proc   = $this->session->userdata('proc');
-        $nik    = $this->session->userdata('nik');
+        $id         = addslashes($_POST['scid']);
+        $mcid       = addslashes($_POST['mcid']);
+        $procid     = $this->session->userdata('procid');
+        $proc       = $this->session->userdata('proc');
+        $proc_tbl   = $this->session->userdata('proc_tbl');
+        $nik        = $this->session->userdata('nik');
                            
         //echo $this->record->create($id, $procid, $proc, $nik, $shid, $mcid);
-        echo $this->record->create_in($id, $procid, $proc, $nik, $mcid);
+        echo $this->record->create($id, $procid, $proc, $proc_tbl, $nik, $mcid);
         
     }
     
-    function create_out()
-    {        
-        if(!isset($_POST))	
-            show_404();
-        
-        $id     = addslashes($_POST['scid']);
-        //$shid   = addslashes($_POST['shid']);
-        $mcid   = addslashes($_POST['mcid']);
-        $procid = $this->session->userdata('procid');
-        $proc   = $this->session->userdata('proc');
-        $nik    = $this->session->userdata('nik');
-                           
-        //echo $this->record->create($id, $procid, $proc, $nik, $shid, $mcid);
-        echo $this->record->create_out($id, $procid, $proc, $nik, $mcid);
-        
-    }
-    
-    function create()
-    {        
-        if(!isset($_POST))	
-            show_404();
-        
-        $id     = addslashes($_POST['scid']);
-        //$shid   = addslashes($_POST['shid']);
-        $mcid   = addslashes($_POST['mcid']);
-        $procid = $this->session->userdata('procid');
-        $proc   = $this->session->userdata('proc');
-        $nik    = $this->session->userdata('nik');
-                           
-        //echo $this->record->create($id, $procid, $proc, $nik, $shid, $mcid);
-        echo $this->record->create($id, $procid, $proc, $nik, $mcid);
-        
-    }
-    
-    function machCheck()
-    {        
+    function machCheck() {        
         if(!isset($_POST))	
             show_404();
         
@@ -76,40 +40,37 @@ class Scan extends CI_Controller {
         
     }
     
-    function viewupdate(){
-        $auth       = new Auth();
-        $auth->restrict();
-        
-        $this->load->view('v_update');  
-    }
-    
     function cardCheck() {
-        $auth       = new Auth();
-        $auth->restrict();
-        
         if(!isset($_POST))	
             show_404();
         
-        $scId   = addslashes($_POST['scId']);
+        $scId   = addslashes($_POST['upScanId']);
         $procid = $this->session->userdata('procid');
                            
         echo $this->record->cardCheck($procid, $scId);
     }
     
-    function update()
-    {
-        $auth       = new Auth();
-        $auth->restrict();
-        
+    function update() {       
         if(!isset($_POST))	
             show_404();
 
         $scId       = addslashes($_POST['idPros']);
         $afterKg    = addslashes($_POST['afterKg']);
         $grPcs      = addslashes($_POST['grPcs']);
+        $proc_tbl   = $this->session->userdata('proc_tbl');
         
-        echo $this->record->update($scId, $afterKg, $grPcs);
+        echo $this->record->update($scId, $afterKg, $grPcs, $proc_tbl);
+    }
+    
+    function kbm() {       
+        if(!isset($_POST))	
+            show_404();
         
+        $kbmScanId  = addslashes($_POST['kbmScanId']);
+        $procid     = $this->session->userdata('procid');
+        $proc_tbl   = $this->session->userdata('proc_tbl');
+                           
+        echo $this->record->kbm($procid, $kbmScanId, $proc_tbl);
     }
 }
 
