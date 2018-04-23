@@ -45,8 +45,8 @@ class M_scan extends CI_Model
                          ->where('m_process_proc_cat_id', $row_3->t_proc_cat);
                 $query_4    = $this->db->get(self::$table4);
                 $row_4      = $query_4->row();
-                $lastProcess = ($row_4->m_process_seq)+1;
-                $nextProcess = $row_1->m_process_seq;
+                $lastProcess = floor($row_4->m_process_seq)+1;
+                $nextProcess = floor($row_1->m_process_seq);
                 if($lastProcess == $nextProcess){   // Memeriksa apakah urutan prosesnya benar ?
                     if($row_3->t_proc_kbm==0){ // memeriksa apakah dalam proses KBM
                         $stdQty     = $row_1->t_prod_qty;
@@ -69,16 +69,22 @@ class M_scan extends CI_Model
                             't_proc_opr_nik'         => $nik,
                             't_proc_machine'         => $mcid
                         ));
-                        $this->db->where('t_proc_id', $row_3->t_proc_id);
-                        $query2 = $this->db->update($row_3->t_proc_cat_table,array(
-                            't_proc_done'            => 1
-                        ));
-                        if($query&&$query2){
-                            return json_encode(array('success'=>true,'warning'=>$warning,'info'=>$info));
+                        if($query){
+                            $this->db->where('t_proc_id', $row_3->t_proc_id);
+                            $query2 = $this->db->update($row_3->t_proc_cat_table,array(
+                                't_proc_done'            => 1
+                            ));
+                            if($query2){
+                                return json_encode(array('success'=>true,'warning'=>$warning,'info'=>$info));
+                            }
+                            else{
+                                return json_encode(array('success'=>false,'error'=>$this->db->_error_message()));
+                            }
                         }
                         else{
                             return json_encode(array('success'=>false,'error'=>$this->db->_error_message()));
                         }
+                        
                     }
                     else{
                         return json_encode(array('success'=>false,'error'=>'Kartu Ini Dalam Proses KBM'));
